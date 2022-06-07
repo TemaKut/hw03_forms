@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block title %}Список записей {{ group.title }}{% endblock %} {% block content %}
+<main>
+  <div class="container py-5">
+    <h1>{{ group.title }}</h1>
+    {% for posts in page_obj %}
+    <article>
+      <ul>
+        <li>Автор: {{ posts.author.get_full_name }}</li>
+        <li>Дата публикации: {{ posts.pub_date|date:"d E Y" }}</li>
+      </ul>
+      <p>{{ posts.text|linebreaks }}</p>
+    </article>
+    {% if not forloop.last %}
+    <hr />
+    {% endif %} {% endfor %}
+  </div>
+</main>
+{% include 'posts/includes/paginator.html' %} {% endblock %}
