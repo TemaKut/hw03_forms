@@ -42,7 +42,7 @@ def profile(request, username):
     page_obj = paginator.get_page(page_number)
 
     context_profile = {
-        'user': user,
+        'author': user,
         'count': count,
         'page_obj': page_obj,
     }
