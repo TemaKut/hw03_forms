@@ -41,13 +41,13 @@ def profile(request, username):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    profile_context = {
-        'username': username,
+    context_profile = {
+        'user': user,
         'count': count,
         'page_obj': page_obj,
     }
 
-    return render(request, "posts/profile.html", profile_context)
+    return render(request, "posts/profile.html", context_profile)
 
 
 def post_detail(request, post_id):
