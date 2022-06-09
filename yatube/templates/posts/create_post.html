@@ -1,11 +1,21 @@
-{% extends 'base.html' %} {% block title %} {% if is_edit %} Редактировать запись {% else %} Добавить запись {% endif %} {% endblock %} {% block content %}
+{% extends 'base.html' %}
+{% block title %}
+
+{% if is_edit %} Редактировать запись {% else %} Добавить запись {% endif %} 
+
+{% endblock %}
+
+{% block content %}
 <main>
   <div class="container py-5">
     <div class="row justify-content-center">
       <div class="col-md-8 p-5">
         <div class="card">
-          <div class="card-header">Новый пост</div>
+          <div class="card-header"> {% if is_edit %} Редактировать пост {% else %} Новая запись {% endif %} </div>
           <div class="card-body">
+
+            {% include 'errors.html' %}
+            
             <form method="post">
               {% csrf_token %}
               <div class="form-group row my-3 p-3">
@@ -19,9 +29,11 @@
               <div class="form-group row my-3 p-3">
                 <label for="id_group">Группа</label>
                 <select name="group" class="form-control" id="id_group">
+
                   {% for group in form.group %}
                   <option value="" selected>{{ group }}</option>
                   {% endfor %}
+
                 </select>
                 <small id="id_group-help" class="form-text text-muted">Группа, к которой будет относиться пост</small>
               </div>

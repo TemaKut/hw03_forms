@@ -6,6 +6,7 @@ User = get_user_model()
 
 class Group(models.Model):
     """Модель группы."""
+
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField()
@@ -16,6 +17,7 @@ class Group(models.Model):
 
 class Post(models.Model):
     """Модель поста."""
+
     text = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(
@@ -32,5 +34,7 @@ class Post(models.Model):
     )
 
     def __str__(self):
-        # выводим текст поста
-        return self.text
+        return self.text(max_length=15)
+
+    class Meta:
+        ordering = ('-pub_date',)

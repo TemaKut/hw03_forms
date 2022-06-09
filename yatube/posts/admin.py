@@ -4,6 +4,8 @@ from .models import Post, Group
 
 
 class PostAdmin(admin.ModelAdmin):
+    """Админская часть редактирования поста."""
+
     list_display = (
         'pk',
         'text',
