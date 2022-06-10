@@ -1,6 +1,5 @@
 {% with request.resolver_match.view_name as view_name %}
 
-{% for post in page_obj %}
 <article>
   <ul>
     <li>
@@ -13,9 +12,7 @@
   </ul>
   <p>{{ post.text|linebreaks }}</p>
 
-  {% if view_name != 'posts:post_detail' %}
   <a href="{% url 'posts:post_detail' post.id %}">Подробная информация о посте..</a>
-  {% endif %}
 
 </article>
 {% if view_name != 'posts:group' %}
@@ -27,6 +24,5 @@
 {% if not forloop.last %}
   <hr />
 {% endif %}
-{% endfor %}
 
 {% endwith %}
