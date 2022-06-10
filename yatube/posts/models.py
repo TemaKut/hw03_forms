@@ -20,9 +20,6 @@ class Group(models.Model):
 class Post(models.Model):
     """Модель поста."""
 
-    class Meta:
-        ordering = ('-pub_date',)
-
     text = models.TextField(verbose_name='Текст поста')
     pub_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(
@@ -40,5 +37,8 @@ class Post(models.Model):
         verbose_name='Группа поста',
     )
 
+    class Meta:
+        ordering = ('-pub_date',)
+
     def __str__(self):
-        return self.text()[:POST_NUM]
+        return self.text[:POST_NUM]

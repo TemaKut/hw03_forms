@@ -9,10 +9,10 @@
         <li class="list-group-item">Дата публикации: {{ post_valid.pub_date }}</li>
 
         {% if post_valid.group %}
-        <li class="list-group-item">
-          Группа: {{ post_valid.group.title }}
-          <a href="{% url 'posts:group' post_valid.group.slug %}">Все записи группы</a>
-        </li>
+          <li class="list-group-item">
+            Группа: {{ post_valid.group.title }}
+            <a href="{% url 'posts:group' post_valid.group.slug %}">Все записи группы</a>
+          </li>
         {% endif %}
 
         <li class="list-group-item">Автор: {{ post_valid.author.get_full_name }}</li>
@@ -29,7 +29,7 @@
       <p>{{ post_valid.text|linebreaks }}</p>
 
       {% if post_valid.author == request.user %}
-      <a class="btn btn-primary" href="{% url 'posts:post_edit' post_valid.id %}" target="_blank">Редактировать запись</a>
+        <a class="btn btn-primary" href="{% url 'posts:post_edit' post_valid.id %}" target="_blank">Редактировать запись</a>
       {% endif %}
       
     </article>
