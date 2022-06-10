@@ -14,18 +14,13 @@
           <div class="card-header"> {% if is_edit %} Редактировать пост {% else %} Новая запись {% endif %} </div>
           <div class="card-body">
 
-            {% include 'errors.html' %}
+            {% include 'includes/errors_form.html' %}
             
-            <form method="post">
+            <form method="post" {% if action_url %} action="{% url action_url %}" {% endif %}>
               {% csrf_token %}
-              <div class="form-group row my-3 p-3">
-                <label for="id_text">
-                  Текст поста
-                  <span class="required text-danger">*</span>
-                </label>
-                {{ form.text }}
-                <small id="id_text-help" class="form-text text-muted">Текст нового поста</small>
-              </div>
+
+              {% include 'posts/includes/form_text.html' %}
+              
               <div class="form-group row my-3 p-3">
                 <label for="id_group">Группа</label>
                 <select name="group" class="form-control" id="id_group">

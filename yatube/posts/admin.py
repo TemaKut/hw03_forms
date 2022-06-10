@@ -7,7 +7,6 @@ class PostAdmin(admin.ModelAdmin):
     """Админская часть редактирования поста."""
 
     list_display = (
-        'pk',
         'text',
         'pub_date',
         'author',

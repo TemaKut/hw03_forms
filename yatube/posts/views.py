@@ -7,12 +7,16 @@ from .forms import PostForm
 from .utils import paginator
 
 
-post_order = Post.objects.all()
+def _get_post_objects():
+    """Получаем объекты модели пост."""
+    result = Post.objects.all()
+
+    return result
 
 
 def index(request):
     """Вывод главной страницы с постами."""
-    posts = post_order
+    posts = _get_post_objects()
     context = {
         'page_obj': paginator(request, posts),
     }
@@ -60,37 +64,31 @@ def post_detail(request, post_id):
 def post_create(request):
     """Страница создания поста."""
     form = PostForm(request.POST or None)
-    if request.method == 'POST':
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            form.save()
-            return redirect('posts:profile', username=request.user.username)
-        return render(request, "posts/create_post.html", {'form': form})
+    if request.method == 'POST' and form.is_valid():
+        post = form.save(commit=False)
+        post.author = request.user
+        form.save()
+
+        return redirect('posts:profile', username=request.user.username)
 
     return render(request, "posts/create_post.html", {'form': form})
 
 
+@login_required
 def post_edit(request, post_id):
     """Страница редактирования созданного ранее поста."""
     post_obj = Post.objects.get(id=post_id)
+    form = PostForm(request.POST or None, instance=post_obj)
     if request.user == post_obj.author and post_obj:
-        if request.method == 'POST':
-            form = PostForm(request.POST, instance=post_obj,)
-            if form.is_valid():
-                form.author = request.user
-                form.save()
-                return redirect(
-                    'posts:post_detail',
-                    post_id=post_id,
-                )
+        if request.method == 'POST' and form.is_valid():
+            form.author = request.user
+            form.save()
 
-            return render(
-                request,
-                "posts/create_post.html",
-                {'is_edit': True, 'form': form, },
+            return redirect(
+                'posts:post_detail',
+                post_id=post_id,
             )
-        form = PostForm(instance=post_obj)
+
         return render(
             request,
             "posts/create_post.html",

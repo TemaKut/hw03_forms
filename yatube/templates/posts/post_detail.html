@@ -26,7 +26,7 @@
       </ul>
     </aside>
     <article class="col-12 col-md-9">
-      <p>{{ post_valid.text }}</p>
+      <p>{{ post_valid.text|linebreaks }}</p>
 
       {% if post_valid.author == request.user %}
       <a class="btn btn-primary" href="{% url 'posts:post_edit' post_valid.id %}" target="_blank">Редактировать запись</a>

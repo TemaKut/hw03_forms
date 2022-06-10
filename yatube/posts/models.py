@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+from .constants import POST_NUM
+
 User = get_user_model()
 
 
@@ -18,12 +20,16 @@ class Group(models.Model):
 class Post(models.Model):
     """Модель поста."""
 
-    text = models.TextField()
+    class Meta:
+        ordering = ('-pub_date',)
+
+    text = models.TextField(verbose_name='Текст поста')
     pub_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='posts',
+        verbose_name='Автор поста',
     )
     group = models.ForeignKey(
         Group,
@@ -31,10 +37,8 @@ class Post(models.Model):
         related_name='posts',
         blank=True,
         null=True,
+        verbose_name='Группа поста',
     )
 
     def __str__(self):
-        return self.text(max_length=15)
-
-    class Meta:
-        ordering = ('-pub_date',)
+        return self.text()[:POST_NUM]
